@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using AspMVC.DataContext;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 
 namespace AspMVC.Controllers
 {
@@ -14,7 +12,11 @@ namespace AspMVC.Controllers
         /// <returns></returns>
         public IActionResult Index()
         {
-            return View();
+            using (var db = new AspNoteDbContext())
+            {
+                var list = db.Notes.ToList(); // 모두 출력 
+                return View(list);
+            }
         }
 
         /// <summary>
