@@ -37,6 +37,7 @@ namespace AspMVC.Controllers
                     if (user != null)
                     {
                         // HttpContext.Session.SetInt32(key, value); - key: 식별자 
+                        HttpContext.Session.SetInt32("USER_LOGIN_KEY", user.UserNo);
 
                         // 로그인에 성공 
                         return RedirectToAction("LoginSuccess", "Home");
