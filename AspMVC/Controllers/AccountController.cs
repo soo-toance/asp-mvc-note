@@ -51,6 +51,15 @@ namespace AspMVC.Controllers
             return View(model);
         }
 
+        public IActionResult Logout()
+        {
+            // HttpContext.Session.Clear(); - 모든 세션 삭제  
+            HttpContext.Session.Remove("USER_LOGIN_KEY");
+
+            return RedirectToAction("Index", "Home");
+        }
+
+
         /// <summary>
         /// 회원 가입 
         /// </summary>
