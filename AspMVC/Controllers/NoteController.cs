@@ -28,6 +28,25 @@ namespace AspMVC.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult Add(Note model)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var db = new AspNoteDbContext())
+                {
+                    db.Notes.Add(model);
+                    if (db.SaveChanges() > 0) // Commit
+                    {
+                        return Redirect("Index"); // NoteController가 생략되어있는 상태 
+                    }
+                }
+                ModelState.AddModelError(string.Empty, "게시물을 저잘할 수 없습니다.");
+            }
+
+            return View(model);
+        }
+
         /// <summary>
         /// 게시물 수정 
         /// </summary>
