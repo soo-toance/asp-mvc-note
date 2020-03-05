@@ -25,7 +25,7 @@ namespace AspMVC.Models
         /// 게시글 내용 
         /// </summary>
         [Required(ErrorMessage = "내용을 입력하세요.")]
-        public string NoteCotents { get; set; }
+        public string NoteContents { get; set; }
 
         /// <summary>
         /// 사용자 번호 
