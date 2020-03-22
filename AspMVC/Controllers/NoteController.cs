@@ -3,11 +3,19 @@ using AspMVC.DataContext;
 using System.Linq;
 using AspMVC.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 
 namespace AspMVC.Controllers
 {
     public class NoteController : Controller
     {
+        private readonly IConfiguration _configuration;
+
+        public NoteController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         /// <summary>
         /// 게시판 리스트
         /// </summary>
@@ -20,7 +28,7 @@ namespace AspMVC.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            using (var db = new AspNoteDbContext())
+            using (var db = new AspNoteDbContext(_configuration))
             {
                 var list = db.Notes.ToList(); // 모두 출력 
                 return View(list);
@@ -35,7 +43,7 @@ namespace AspMVC.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            using (var db = new AspNoteDbContext())
+            using (var db = new AspNoteDbContext(_configuration))
             {
                 var note = db.Notes.FirstOrDefault(n => n.NoteNo.Equals(noteNo));
                 return View(note);
@@ -69,7 +77,7 @@ namespace AspMVC.Controllers
 
             if (ModelState.IsValid)
             {
-                using (var db = new AspNoteDbContext())
+                using (var db = new AspNoteDbContext(_configuration))
                 {
                     db.Notes.Add(model);
                     if (db.SaveChanges() > 0) // Commit

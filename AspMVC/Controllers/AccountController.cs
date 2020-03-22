@@ -4,11 +4,19 @@ using AspMVC.Models;
 using AspMVC.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace AspMVC.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly IConfiguration _configuration;
+
+        public AccountController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         /// <summary>
         /// 로그인 
         /// </summary>
@@ -23,7 +31,7 @@ namespace AspMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (var db = new AspNoteDbContext())
+                using (var db = new AspNoteDbContext(_configuration))
                 {
                     // Linq - 메서드 체이닝 
                     // => : A Go to B 
@@ -76,7 +84,7 @@ namespace AspMVC.Controllers
             // ModelState.IsValid : Model에 정의한 값 
             if (ModelState.IsValid)
             {
-                using (var db = new AspNoteDbContext())
+                using (var db = new AspNoteDbContext(_configuration))
                 {
                     db.Users.Add(model); // Memory
                     db.SaveChanges(); // Database 

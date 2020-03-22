@@ -23,6 +23,11 @@ namespace AspMVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            // Configuration 
+            services.AddSingleton<IConfiguration>(Configuration); // IConfiguration을 다른 프로젝트에서도 접근 가능하게 함.
+
+
             // DI 의존성 주입 - ASP.NET MVC 4,5에서는 Unity Nuget Package 설치가 필요했었음 
             // Session - 서비스에 등록함
             services.AddSession();
