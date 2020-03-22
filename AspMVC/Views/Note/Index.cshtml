@@ -25,12 +25,19 @@
                     - http://www.example.com/{noteNo}
                     - http://www.example.com/Note/Detail?noteNo=1
                 -->
-                <td><a asp-controller="Note" asp-action="Detail" asp-route-noteNo="@note.NoteNo">@note.NoteTitle</a></td>
+                <td><a asp-controller="Note" asp-action="Detail" asp-route-noteNo="@note.NoteNo" data-target="#NoteDetail" data-toggle="modal">@note.NoteTitle</a></td>
                 <td>@note.UserNo</td>
             </tr>
         }
     </tbody>
 </table>
+
+<div class="modal fade text-center" id="NoteDetail">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
 
 <a class="btn btn-warning" asp-controller="Note" asp-action="Add">Add</a>
 

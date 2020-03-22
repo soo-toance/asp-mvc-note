@@ -46,7 +46,7 @@ namespace AspMVC.Controllers
             using (var db = new AspNoteDbContext(_configuration))
             {
                 var note = db.Notes.FirstOrDefault(n => n.NoteNo.Equals(noteNo));
-                return View(note);
+                return PartialView(note);
             }
         }
 
