@@ -5,16 +5,19 @@ using AspMVC.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace AspMVC.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IConfiguration _configuration;
+        private readonly IConfiguration _configuration; 
+        private readonly ILogger<AccountController> _logger;
 
-        public AccountController(IConfiguration configuration)
+        public AccountController(IConfiguration configuration, ILogger<AccountController> logger)
         {
             _configuration = configuration;
+            _logger = logger;
         }
 
         /// <summary>
@@ -48,12 +51,14 @@ namespace AspMVC.Controllers
                         HttpContext.Session.SetInt32("USER_LOGIN_KEY", user.UserNo);
 
                         // 로그인에 성공 
+                        _logger.LogInformation($@"LoginSuccess - {model.UserId}");
                         return RedirectToAction("LoginSuccess", "Home");
                     }
                 }
             }
 
             // 로그인에 실패
+            _logger.LogInformation($@"LoginFail - {model.UserId}");
             ModelState.AddModelError(string.Empty, "사용자 ID 혹은 비밀번호가 올바르지 않습니다.");
                     
             return View(model);
